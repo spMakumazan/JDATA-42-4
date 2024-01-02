@@ -1,20 +1,18 @@
 package ru.netology.jdata424.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import ru.netology.jdata424.entity.Contact;
 import ru.netology.jdata424.entity.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class MyRepo {
+public interface MyRepo extends CrudRepository<Person, Contact> {
+    List<Person> findByCityOfLiving(String city);
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    List<Person> findByContactAgeLessThanOrderByContactAge(int age);
 
-    public List<Person> getPersonsByCity(String city) {
-        return entityManager.createNativeQuery(
-                String.format("select * from PERSONS where city_of_living = '%s'", city)).getResultList();
-    }
+    Optional<Person> findByContactNameAndContactSurnameAndContactAge(String name, String surname, int age);
 }
