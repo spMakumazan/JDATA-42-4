@@ -20,16 +20,16 @@ public class MyController {
 
     @GetMapping("/persons/by-city")
     public List<Person> getPersons(@RequestParam("city") String city) {
-        return myRepo.findByCityOfLiving(city);
+        return myRepo.findByCity(city);
     }
 
     @GetMapping("/persons/by-age")
     public List<Person> getPersons(@RequestParam("age") int age) {
-        return myRepo.findByContactAgeLessThanOrderByContactAge(age);
+        return myRepo.findByAge(age);
     }
 
     @GetMapping("/persons/by-id")
     public Person getPersons(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("age") int age) {
-        return myRepo.findByContactNameAndContactSurnameAndContactAge(name, surname, age).orElseThrow(NoPersonException::new);
+        return myRepo.findByContact(name, surname, age).orElseThrow(NoPersonException::new);
     }
 }
